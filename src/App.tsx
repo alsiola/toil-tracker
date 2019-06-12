@@ -1,26 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef } from "react";
+import { Auth, AuthContext } from "./auth";
+import { Router } from "@reach/router";
+import { Route } from "./routing/Route";
+import { Callback } from "./auth/Callback";
+import { Hello } from "./components/Login";
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export const App: React.FC = () => {
+    const { current: auth } = useRef(new Auth());
 
-export default App;
+    return (
+        <AuthContext.Provider value={{ auth }}>
+            <Router>
+                <Route path="/" Component={Hello} />
+                <Route path="/callback" Component={Callback} auth={auth} />
+            </Router>
+        </AuthContext.Provider>
+    );
+};
