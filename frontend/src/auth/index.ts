@@ -1,4 +1,4 @@
-import auth0 from "auth0-js";
+import auth0, { Auth0UserProfile } from "auth0-js";
 import { navigate } from "@reach/router";
 import { createContext } from "react";
 
@@ -8,12 +8,27 @@ export class Auth {
         clientID: "HghK4WksrBCqBf57d7FUbsU8mC0P9l5F",
         redirectUri: "http://localhost:4000/callback",
         responseType: "token id_token",
-        scope: "openid"
+        scope: "openid profile email"
     });
 
     private accessToken?: string;
     private idToken?: string;
     private expiresAt?: number;
+
+    getUser = (): Promise<Auth0UserProfile> => {
+        if (!this.accessToken) {
+            return Promise.reject("Not authenticated");
+        }
+
+        return new Promise((resolve, reject) => {
+            this.auth0.client.userInfo(this.accessToken!, (err, profile) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(profile);
+            });
+        });
+    };
 
     login = () => {
         this.auth0.authorize();

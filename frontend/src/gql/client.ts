@@ -3,14 +3,16 @@ import { Auth } from "../auth";
 
 export const createClient = (auth: Auth) => {
     return new ApolloClient({
-        uri: process.env.API_URL,
+        uri: "http://localhost:4001",
         request: operation => {
-            operation.setContext({
-                headers: {
-                    Authorization: `Bearer ${auth.getAccessToken()}`,
-                    Identity: auth.getIdToken()
-                }
-            });
+            if (auth.isAuthenticated()) {
+                operation.setContext({
+                    headers: {
+                        Authorization: `Bearer ${auth.getAccessToken()}`,
+                        Identity: auth.getIdToken()
+                    }
+                });
+            }
         }
     });
 };

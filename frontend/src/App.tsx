@@ -3,7 +3,7 @@ import { Auth, AuthContext } from "./auth";
 import { Router } from "@reach/router";
 import { Route } from "./routing/Route";
 import { Callback } from "./auth/Callback";
-import { Hello } from "./components/Login";
+import { Login } from "./components/Login";
 import { createClient } from "./gql/client";
 import { ApolloProvider } from "react-apollo";
 
@@ -15,7 +15,7 @@ export const App: React.FC = () => {
         <AuthContext.Provider value={{ auth }}>
             <ApolloProvider client={client}>
                 <Router>
-                    <Route path="/" Component={Hello} />
+                    <Route path="/" Component={Login} />
                     <Route path="/callback" Component={Callback} auth={auth} />
                 </Router>
             </ApolloProvider>
