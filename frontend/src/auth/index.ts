@@ -14,20 +14,20 @@ export class Auth {
     private accessToken?: string;
     private idToken?: string;
     private expiresAt?: number;
+    private userInfo?: Auth0UserProfile;
 
-    getUser = (): Promise<Auth0UserProfile> => {
-        if (!this.accessToken) {
-            return Promise.reject("Not authenticated");
-        }
-
-        return new Promise((resolve, reject) => {
-            this.auth0.client.userInfo(this.accessToken!, (err, profile) => {
-                if (err) {
-                    return reject(err);
-                }
-                resolve(profile);
-            });
+    private getUser = (accessToken: string, cb: () => void) => {
+        this.auth0.client.userInfo(accessToken, (err, profile) => {
+            if (err) {
+                console.error(err);
+            }
+            this.userInfo = profile;
+            cb();
         });
+    };
+
+    user = () => {
+        return this.userInfo;
     };
 
     login = () => {
@@ -37,7 +37,9 @@ export class Auth {
     handleAuthentication = () => {
         this.auth0.parseHash((err, authResult) => {
             if (authResult && authResult.accessToken && authResult.idToken) {
-                this.setSession(authResult);
+                this.getUser(authResult.accessToken, () =>
+                    this.setSession(authResult)
+                );
             } else if (err) {
                 navigate("/");
                 console.log(err);
@@ -58,7 +60,7 @@ export class Auth {
         return this.idToken;
     };
 
-    setSession = (authResult: any) => {
+    private setSession = (authResult: any) => {
         // Set isLoggedIn flag in localStorage
         localStorage.setItem("isLoggedIn", "true");
 
@@ -69,10 +71,10 @@ export class Auth {
         this.expiresAt = expiresAt;
 
         // navigate to the home route
-        navigate("/");
+        navigate("/app");
     };
 
-    renewSession = () => {
+    private renewSession = () => {
         this.auth0.checkSession({}, (err, authResult) => {
             if (authResult && authResult.accessToken && authResult.idToken) {
                 this.setSession(authResult);
@@ -111,7 +113,7 @@ export class Auth {
         if (!this.expiresAt) {
             return false;
         }
-        return new Date().getTime() < this.expiresAt;
+        return new Date().getTime() < this.expiresAt && !!this.userInfo;
     };
 }
 

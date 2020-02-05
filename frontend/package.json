@@ -4,8 +4,10 @@
   "private": true,
   "dependencies": {
     "@reach/router": "^1.2.1",
+    "@types/date-fns": "^2.6.0",
     "apollo-boost": "^0.4.2",
     "auth0-js": "^9.10.4",
+    "date-fns": "^1.30.1",
     "graphql": "^14.3.1",
     "history": "^4.9.0",
     "react": "^16.8.6",
@@ -14,11 +16,15 @@
     "react-scripts": "3.0.1",
     "typescript": "3.5.1"
   },
+  "resolutions": {
+    "graphql": "14.3.1"
+  },
   "scripts": {
     "start": "PORT=4000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "codegen": "apollo client:codegen --target typescript --endpoint=http://localhost:4001/graphql"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,8 +46,9 @@
     "@types/history": "^4.7.2",
     "@types/jest": "24.0.13",
     "@types/node": "12.0.8",
+    "@types/reach__router": "^1.2.4",
     "@types/react": "16.8.19",
     "@types/react-dom": "16.8.4",
-    "@types/reach__router": "^1.2.4"
+    "apollo": "^2.13.1"
   }
 }

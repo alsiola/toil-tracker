@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "@types/dotenv": "^6.1.1",
+    "@types/lodash": "^4.14.134",
+    "@types/pg": "^7.4.14",
+    "apollo-server": "^2.6.3",
+    "dotenv": "^8.0.0",
+    "graphql": "^14.3.1",
+    "lodash": "^4.17.11",
+    "pg": "^7.11.0",
+    "typeorm": "^0.2.18"
+  },
+  "scripts": {
+    "start": "rm -rf lib && tsc -w"
+  },
+  "devDependencies": {
+    "@types/graphql": "^14.2.0"
+  }
+}
