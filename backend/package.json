@@ -3,7 +3,7 @@
     "@types/dotenv": "^6.1.1",
     "@types/lodash": "^4.14.134",
     "@types/pg": "^7.4.14",
-    "apollo-server": "^2.6.3",
+    "apollo-server": "^2.14.2",
     "dotenv": "^8.0.0",
     "graphql": "^14.3.1",
     "lodash": "^4.17.11",
