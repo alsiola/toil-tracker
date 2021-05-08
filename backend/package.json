@@ -8,7 +8,7 @@
     "graphql": "^14.3.1",
     "lodash": "^4.17.11",
     "pg": "^7.11.0",
-    "typeorm": "^0.2.18"
+    "typeorm": "^0.2.25"
   },
   "scripts": {
     "start": "rm -rf lib && tsc -w"
